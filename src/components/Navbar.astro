@@ -10,7 +10,7 @@ const navItems = [
 <header class="fixed top-0 w-full z-50 transition-all py-4">
 	<div class="max-w-6xl mx-auto px-4">
 		<div
-			class="h-16 flex items-center justify-between bg-[var(--bg-secondary)] border struct-border px-6"
+			class="h-16 flex items-center justify-between bg-[var(--bg-secondary)] border struct-border px-6 relative z-50"
 		>
 			<a
 				href="#"
@@ -34,7 +34,8 @@ const navItems = [
 
 			<!-- Mobile Menu Button -->
 			<button
-				class="md:hidden p-2 text-slate-400 hover:text-cyan-400 transition-colors"
+				id="mobile-menu-btn"
+				class="md:hidden p-2 text-slate-400 hover:text-[var(--accent-red)] transition-colors"
 				aria-label="Open menu"
 			>
 				<svg
@@ -54,5 +55,57 @@ const navItems = [
 				</svg>
 			</button>
 		</div>
+
+		<!-- Mobile Menu Panel -->
+		<div id="mobile-menu" class="md:hidden absolute top-full left-4 right-4 bg-[var(--bg-secondary)] border-x border-b struct-border flex-col transform origin-top transition-all duration-300 scale-y-0 opacity-0 hidden">
+			<nav class="flex flex-col py-4">
+				{
+					navItems.map((item) => (
+						<a
+							href={item.href}
+							class="px-6 py-4 text-sm font-semibold tracking-widest text-slate-400 hover:text-[var(--accent-red)] hover:bg-white/5 border-b border-white/5 last:border-b-0 transition-all duration-300 mobile-menu-link"
+						>
+							{item.name}
+						</a>
+					))
+				}
+			</nav>
+		</div>
 	</div>
 </header>
+
+<script>
+	const mobileBtn = document.getElementById('mobile-menu-btn');
+	const mobileMenu = document.getElementById('mobile-menu');
+	const mobileLinks = document.querySelectorAll('.mobile-menu-link');
+
+	if (mobileBtn && mobileMenu) {
+		mobileBtn.addEventListener('click', () => {
+			if (mobileMenu.classList.contains('hidden')) {
+				mobileMenu.classList.remove('hidden');
+				// Small delay to allow display:block to apply before animating opacity/transform
+				setTimeout(() => {
+					mobileMenu.classList.remove('scale-y-0', 'opacity-0');
+					mobileMenu.classList.add('scale-y-100', 'opacity-100');
+				}, 10);
+			} else {
+				mobileMenu.classList.remove('scale-y-100', 'opacity-100');
+				mobileMenu.classList.add('scale-y-0', 'opacity-0');
+				setTimeout(() => {
+					mobileMenu.classList.add('hidden');
+				}, 300); // match duration-300
+			}
+		});
+
+		// Close menu when clicking a link
+		mobileLinks.forEach(link => {
+			link.addEventListener('click', () => {
+				mobileMenu.classList.remove('scale-y-100', 'opacity-100');
+				mobileMenu.classList.add('scale-y-0', 'opacity-0');
+				setTimeout(() => {
+					mobileMenu.classList.add('hidden');
+				}, 300);
+			});
+		});
+	}
+</script>
