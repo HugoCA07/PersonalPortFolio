@@ -1,0 +1,91 @@
+---
+const experiences = [
+	{
+		title: "DAW (Web Application Development) - Student in Spain",
+		description: "Focused on modern, high-performance web technologies: HTML5, CSS3, JS, TS, Astro, Tailwind CSS, and Git. Building a solid foundation in clean architecture and scalable codebases.",
+		date: "2024 - PRESENT",
+		active: true,
+		telemetry: [
+			{ name: "ASTRO / TAILWIND", value: "95%" },
+			{ name: "JAVASCRIPT / TS", value: "80%" },
+			{ name: "UI/UX DESIGN", value: "85%" }
+		]
+	},
+	{
+		title: "Freelance & Digital Solutions",
+		description: "Creating heavily optimized, lightning-fast web solutions for local businesses and startups to maximize their digital impact and conversion rates.",
+		date: "2023 - PRESENT",
+		active: false,
+		telemetry: [
+			{ name: "PERFORMANCE OPT", value: "98%" },
+			{ name: "FRONTEND ARCHITECTURE", value: "85%" }
+		]
+	}
+];
+---
+
+<section id="experience" class="py-32 px-6 lg:px-12 max-w-[100rem] mx-auto relative z-10">
+	<div class="flex flex-col lg:flex-row gap-16 lg:gap-24 relative items-start">
+		
+		<!-- Sticky Left Panel -->
+		<div class="w-full lg:w-4/12 lg:sticky lg:top-40 reveal-on-scroll opacity-0 translate-y-24 blur-sm transition-all duration-[1000ms] ease-[cubic-bezier(0.22,1,0.36,1)]">
+			<h2 class="text-xs font-bold tracking-[0.2em] text-[var(--accent-red)] mb-6 uppercase">Career Track</h2>
+			<h3 class="text-5xl lg:text-7xl font-bold text-white tracking-tighter uppercase font-clash leading-none mb-8">Technical<br/>Experience</h3>
+			<p class="text-slate-400 font-light leading-relaxed max-w-sm text-lg">
+				A timeline of my professional journey, focusing on high-performance engineering, modern architectures, and premium digital design.
+			</p>
+		</div>
+
+		<!-- Right Scrolling Timeline -->
+		<div class="w-full lg:w-8/12 border-l border-white/10 pl-8 md:pl-16 relative space-y-24">
+			
+			{experiences.map((exp) => (
+				<div 
+					class={`experience-card relative reveal-on-scroll opacity-0 translate-y-24 scale-90 blur-sm transition-all duration-[1000ms] ease-[cubic-bezier(0.22,1,0.36,1)]`}
+				>
+					
+					<!-- Timeline Dot -->
+					<div class="absolute left-[-37px] md:left-[-69px] w-3 h-3 bg-[var(--bg-primary)] border-2 border-[var(--accent-red)] top-8 z-10 transform rotate-45 shadow-[0_0_15px_rgba(255,51,0,0.5)]">
+						{exp.active && (
+							<div class="absolute inset-[-6px] border border-[var(--accent-red)] animate-ping opacity-50"></div>
+						)}
+					</div>
+					
+					<!-- Content Panel -->
+					<div class="bg-[var(--bg-secondary)] border struct-border p-8 lg:p-12 shadow-2xl hover:border-[var(--accent-red)] transition-colors duration-500">
+						<span class="text-[11px] font-bold tracking-widest text-[var(--accent-red)] mb-4 block">{exp.date}</span>
+						<h4 class="text-xl lg:text-2xl font-bold text-slate-100 uppercase tracking-tight mb-4 font-clash">{exp.title}</h4>
+						<p class="text-base lg:text-lg text-slate-400 font-light leading-relaxed mb-8">
+							{exp.description}
+						</p>
+						
+						<!-- Telemetry Logs -->
+						{exp.telemetry && (
+							<div class="space-y-6 pt-8 border-t struct-border-t">
+								{exp.telemetry.map(tech => (
+									<div class="flex flex-col space-y-3">
+										<div class="flex justify-between items-center">
+											<span class="text-[11px] tracking-widest text-slate-300 uppercase font-bold">{tech.name}</span>
+											<span class="text-[10px] text-[var(--accent-red)] font-mono tracking-widest">{tech.value}</span>
+										</div>
+										<div class="w-full h-[2px] bg-black border struct-border overflow-hidden">
+											<div class="telemetry-fill h-full bg-[var(--accent-red)] transition-all duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)] delay-500" style={`--target-width: ${tech.value}; width: 0%;`}></div>
+										</div>
+									</div>
+								))}
+							</div>
+						)}
+					</div>
+					
+				</div>
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	/* Trigger progress bars fill when the parent card receives the reveal class from Intersection Observer */
+	:global(.experience-card.is-revealed) .telemetry-fill {
+		width: var(--target-width) !important;
+	}
+</style>

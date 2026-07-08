@@ -1,0 +1,62 @@
+---
+const projects = [
+	{
+		title: "TERRAFORGE",
+		description: "A 2D sandbox game engine with procedural generation. Built from scratch in C++ and SFML, featuring a custom physics system, tileset rendering, and an ECS-based architecture.",
+		link: "https://github.com/HugoCA07/TerraForge",
+		icon: "engine",
+		image: "/terraforge.jpg"
+	},
+	{
+		title: "Aerodynamic Web Interface",
+		description: "An experimental WebGL experience featuring fluid physics and custom shaders, heavily inspired by modern motorsport aerodynamics.",
+		link: "#",
+		icon: "wing",
+		image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2560&auto=format&fit=crop"
+	},
+	{
+		title: "Startup Telemetry Dashboard",
+		description: "A real-time data visualization dashboard processing thousands of events per second with zero UI blocking or frame drops.",
+		link: "#",
+		icon: "wheel",
+		image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2560&auto=format&fit=crop"
+	}
+];
+---
+
+<section id="projects" class="py-32 max-w-[100rem] mx-auto relative z-10">
+	<div class="mb-24 px-4 lg:px-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
+		<div>
+			<h2 class="text-xs font-bold tracking-[0.2em] text-[var(--accent-red)] mb-4 uppercase">Featured Work</h2>
+			<h3 class="text-5xl lg:text-7xl font-bold text-white tracking-tighter uppercase font-clash">Selected Projects</h3>
+		</div>
+		<p class="text-slate-400 font-light max-w-md text-lg">
+			A curated selection of my most technically challenging and visually impactful builds.
+		</p>
+	</div>
+	
+	<div class="flex flex-col border-t struct-border-t">
+		{projects.map((project, index) => (
+			<a href={project.link} target="_blank" rel="noopener noreferrer" class="group relative block w-full border-b struct-border-b py-12 md:py-20 hover:bg-white/[0.02] transition-colors duration-500 reveal-on-scroll opacity-0 translate-y-12">
+				
+				<div class="flex flex-col md:flex-row md:items-center justify-between gap-8 relative z-10 px-4 lg:px-12">
+					<div class="flex items-start gap-4 md:gap-12">
+						<span class="text-[var(--accent-red)] font-mono text-sm tracking-widest mt-2 block md:w-12">0{index + 1} //</span>
+						<h4 class="text-4xl md:text-7xl lg:text-8xl font-black text-slate-600 group-hover:text-white uppercase font-clash tracking-tighter transition-colors duration-500 relative z-20 mix-blend-difference">{project.title}</h4>
+					</div>
+					
+					<div class="md:w-1/4 flex flex-col justify-end text-left md:text-right">
+						<p class="text-slate-400 font-light text-sm md:text-base opacity-100 md:opacity-0 group-hover:opacity-100 transform md:translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">{project.description}</p>
+					</div>
+				</div>
+
+				<!-- Floating Image Reveal (Desktop) -->
+				<div class="absolute top-1/2 right-[20%] -translate-y-1/2 w-[35vw] max-w-[500px] aspect-[16/10] z-0 opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hidden md:block overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.8)] struct-border">
+					<img src={project.image} alt={project.title} class="w-full h-full object-cover grayscale mix-blend-luminosity group-hover:grayscale-0 group-hover:mix-blend-normal transition-all duration-1000 scale-110 group-hover:scale-100" />
+					<div class="absolute inset-0 bg-[#111] mix-blend-multiply opacity-50"></div>
+				</div>
+				
+			</a>
+		))}
+	</div>
+</section>

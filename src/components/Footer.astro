@@ -1,0 +1,56 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<section id="contact" class="py-32 relative z-10 border-t struct-border-t bg-[var(--bg-primary)]">
+	<div class="max-w-4xl mx-auto px-4 text-center">
+		
+		<div class="bg-[var(--bg-secondary)] border struct-border p-12 md:p-20 relative overflow-hidden group">
+			
+			<!-- Racing Flag / Lines background effect -->
+			<div class="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-700" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, #fff 10px, #fff 20px);"></div>
+			<div class="absolute inset-0 bg-[var(--bg-secondary)]/95"></div>
+			
+			<div class="relative z-10">
+				<h2 class="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase italic mb-8">
+					Ready for the <br/><span class="text-[var(--accent-red)]">Next Grid?</span>
+				</h2>
+				
+				<p class="text-slate-400 mb-10 max-w-lg mx-auto font-light">
+					Let's engineer your next digital solution. Available for freelance opportunities and innovative projects.
+				</p>
+				
+				<a href="mailto:2007huugoo@gmail.com" class="inline-block px-10 py-5 bg-[var(--bg-primary)] text-white font-bold tracking-widest text-sm border struct-border hover:bg-[var(--accent-red)] hover:border-[var(--accent-red)] hover:text-white transition-all duration-300 transform hover:-translate-y-1 shadow-[0_0_30px_rgba(255,51,0,0.2)] hover:shadow-[0_0_40px_rgba(255,51,0,0.5)] mb-12">
+					PIT STOP / CONTACT
+				</a>
+				
+				<!-- Contact Details Grid -->
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left max-w-2xl mx-auto border-t struct-border-t pt-10">
+					<div class="flex flex-col space-y-2">
+						<span class="text-[10px] tracking-widest text-slate-500 font-bold uppercase">Email</span>
+						<a href="mailto:2007huugoo@gmail.com" class="text-sm md:text-base font-medium text-white hover:text-[var(--accent-red)] transition-colors">2007huugoo@gmail.com</a>
+					</div>
+					<div class="flex flex-col space-y-2">
+						<span class="text-[10px] tracking-widest text-slate-500 font-bold uppercase">Phone</span>
+						<a href="tel:+34621002075" class="text-sm md:text-base font-medium text-white hover:text-[var(--accent-red)] transition-colors">+34 621 00 20 75</a>
+					</div>
+					<div class="flex flex-col space-y-2">
+						<span class="text-[10px] tracking-widest text-slate-500 font-bold uppercase">LinkedIn</span>
+						<a href="https://www.linkedin.com/in/hugo-cruz-aranda-186848344/" target="_blank" rel="noopener noreferrer" class="text-sm md:text-base font-medium text-white hover:text-[var(--accent-red)] transition-colors">Hugo Cruz Aranda</a>
+					</div>
+					<div class="flex flex-col space-y-2">
+						<span class="text-[10px] tracking-widest text-slate-500 font-bold uppercase">GitHub</span>
+						<a href="https://github.com/HugoCA07" target="_blank" rel="noopener noreferrer" class="text-sm md:text-base font-medium text-white hover:text-[var(--accent-red)] transition-colors">HugoCA07</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</section>
+
+<footer class="py-8 border-t struct-border-t text-center relative z-10 bg-[var(--bg-primary)]">
+	<p class="text-[10px] tracking-widest text-slate-600 font-bold uppercase">
+		&copy; {currentYear} HUGO. ENGINEERED FOR SPEED.
+	</p>
+</footer>

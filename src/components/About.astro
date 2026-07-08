@@ -1,0 +1,50 @@
+---
+const skills = [
+	"Astro", "React", "TypeScript", "Tailwind CSS", 
+	"Node.js", "Next.js", "Figma", "Git",
+	"PostgreSQL", "GraphQL"
+];
+---
+
+<section id="about" class="py-24 relative z-10">
+	<!-- Soft background divider -->
+	<div class="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-50/50 to-transparent -z-10"></div>
+	
+	<div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row gap-12 items-center">
+		
+		<div class="flex-1 space-y-6">
+			<h2 class="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+				Sobre mí
+			</h2>
+			<div class="space-y-4 text-slate-700 text-lg font-medium leading-relaxed">
+				<p>
+					Tengo 18 años, resido en España y soy estudiante de DAW (Desarrollo de Aplicaciones Web). Como desarrollador web, mi pasión es crear sitios y aplicaciones web ultra rápidos, modernos y optimizados bajo los mejores estándares.
+				</p>
+				<p>
+					Mi enfoque principal está en colaborar con negocios locales y startups para llevar su presencia digital al siguiente nivel, impulsando su crecimiento y atrayendo nuevos clientes mediante soluciones de alto rendimiento.
+				</p>
+			</div>
+		</div>
+		
+		<div class="flex-1 w-full bg-white/40 backdrop-blur-xl p-8 rounded-3xl border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.03)] relative overflow-hidden group">
+			<!-- Subtle light sweep effect on hover -->
+			<div class="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover:animate-[shimmer_2s_infinite]"></div>
+			
+			<h3 class="text-xl font-bold text-slate-900 mb-6 relative z-10">Stack Tecnológico</h3>
+			<div class="flex flex-wrap gap-3 relative z-10">
+				{skills.map(skill => (
+					<div class="px-4 py-2 bg-white/50 text-slate-800 text-sm font-semibold rounded-xl border border-white/80 shadow-sm hover:bg-cyan-50 hover:text-cyan-800 hover:border-cyan-200 transition-all duration-300 cursor-default transform hover:-translate-y-0.5">
+						{skill}
+					</div>
+				))}
+			</div>
+		</div>
+		
+	</div>
+</section>
+
+<style>
+	@keyframes shimmer {
+		100% { transform: translateX(100%); }
+	}
+</style>

@@ -1,0 +1,229 @@
+---
+import '../styles/global.css';
+import TelemetryHUD from '../components/TelemetryHUD.astro';
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "Hugo - High-Performance Web Developer" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		
+		<title>{title}</title>
+		
+		<!-- Google Fonts (Inter) & Fontshare (Clash Display) -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+		<link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,500,600,700&display=swap" rel="stylesheet">
+		
+		<!-- Lenis Smooth Scroll -->
+		<script is:inline src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+	</head>
+	<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-[var(--accent-red)] selection:text-white relative overflow-x-hidden">
+		
+		<!-- Noise overlay for brutalist texture -->
+		<div class="bg-noise"></div>
+		
+		<div class="relative z-10 flex flex-col min-h-screen">
+			<slot />
+		</div>
+		
+		<TelemetryHUD />
+
+		<script>
+			// Initialize Lenis
+			const lenis = new (window as any).Lenis({
+				duration: 1.2,
+				easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // easeOutExpo
+				direction: 'vertical',
+				smooth: true,
+			});
+
+			const hud = document.getElementById('telemetry-hud');
+			const rpmBar = document.getElementById('hud-rpm-bar');
+			const rpmText = document.getElementById('hud-rpm-text');
+			const gForceText = document.getElementById('hud-gforce');
+
+			// Fade in HUD on load
+			setTimeout(() => {
+				if (hud) {
+					hud.classList.remove('opacity-0', 'translate-y-8');
+					hud.classList.add('opacity-100', 'translate-y-0');
+				}
+			}, 1000);
+
+			// Scroll Velocity = RPM Logic
+			lenis.on('scroll', (e: any) => {
+				const velocity = Math.abs(e.velocity || 0);
+				
+				// Map velocity (approx 0-25) to RPM (0-10000)
+				let rpm = Math.min(Math.round(velocity * 400), 10000);
+				let percentage = (rpm / 10000) * 100;
+				
+				if(rpmBar) rpmBar.style.width = `${percentage}%`;
+				if(rpmText) {
+					rpmText.innerText = `${rpm}`;
+					if (rpm > 8000) rpmText.classList.replace('text-slate-300', 'text-red-500');
+					else rpmText.classList.replace('text-red-500', 'text-slate-300');
+				}
+				
+				// Motion blur toggle for extreme speeds
+				if (velocity > 15) {
+					document.body.classList.add('high-speed');
+				} else {
+					document.body.classList.remove('high-speed');
+				}
+			});
+
+			// Mouse Speed = G-Force Logic
+			let lastMouseTime = Date.now();
+			let lastMouseX = 0;
+			let lastMouseY = 0;
+
+			document.addEventListener('mousemove', (e: MouseEvent) => {
+				const now = Date.now();
+				const dt = now - lastMouseTime;
+				
+				if (dt > 50) { // Throttle to 50ms
+					const dx = e.clientX - lastMouseX;
+					const dy = e.clientY - lastMouseY;
+					const speed = Math.sqrt(dx*dx + dy*dy) / dt;
+					
+					// Map pixel speed to mock G-Force (0 to 5.0)
+					const gforce = Math.min((speed / 3), 5.0).toFixed(1);
+					
+					if(gForceText) gForceText.innerText = gforce;
+					
+					lastMouseX = e.clientX;
+					lastMouseY = e.clientY;
+					lastMouseTime = now;
+				}
+			});
+
+			function raf(time: number) {
+				lenis.raf(time);
+				requestAnimationFrame(raf);
+			}
+			requestAnimationFrame(raf);
+
+
+			
+			// Scroll Reveal Observer
+			const observerOptions = {
+				root: null,
+				rootMargin: '0px 0px -50px 0px',
+				threshold: 0.20
+			};
+
+			const observer = new IntersectionObserver((entries, observer) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-revealed');
+						observer.unobserve(entry.target);
+					}
+				});
+			}, observerOptions);
+
+			document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+				observer.observe(el);
+			});
+
+			// Magnetic Buttons Logic
+			const magneticButtons = document.querySelectorAll('.magnetic-btn');
+
+			magneticButtons.forEach((btn: any) => {
+				const text = btn.querySelector('.magnetic-text');
+				
+				btn.addEventListener('mousemove', (e: MouseEvent) => {
+					// Disable transition for instantaneous tracking
+					btn.style.transition = 'none';
+					if (text) text.style.transition = 'none';
+					
+					const rect = btn.getBoundingClientRect();
+					// Calculate exact center of the button
+					const centerX = rect.left + rect.width / 2;
+					const centerY = rect.top + rect.height / 2;
+					
+					// Calculate distance from cursor to center
+					const distanceX = e.clientX - centerX;
+					const distanceY = e.clientY - centerY;
+					
+					// Apply transforms with distinct limits for 3D parallax
+					btn.style.transform = `translate(${distanceX * 0.3}px, ${distanceY * 0.3}px)`;
+					if (text) {
+						text.style.transform = `translate(${distanceX * 0.1}px, ${distanceY * 0.1}px)`;
+					}
+				});
+				
+				btn.addEventListener('mouseleave', () => {
+					// Restore transition classes cleanly
+					btn.style.transition = 'transform 500ms ease-out, background-color 300ms, border-color 300ms';
+					if (text) text.style.transition = 'transform 500ms ease-out';
+					
+					// Snap back to 0
+					btn.style.transform = `translate(0px, 0px)`;
+					if (text) {
+						text.style.transform = `translate(0px, 0px)`;
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		font-family: 'Inter', system-ui, sans-serif;
+	}
+	
+	.font-clash {
+		font-family: 'Clash Display', sans-serif;
+	}
+	
+	/* Lenis required styles */
+	html.lenis {
+		height: auto;
+	}
+	.lenis.lenis-smooth {
+		scroll-behavior: auto;
+	}
+	.lenis.lenis-smooth [data-lenis-prevent] {
+		overscroll-behavior: contain;
+	}
+	.lenis.lenis-stopped {
+		overflow: hidden;
+	}
+	.lenis.lenis-scrolling iframe {
+		pointer-events: none;
+	}
+
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+	::-webkit-scrollbar-track {
+		background: #080c10; 
+	}
+	::-webkit-scrollbar-thumb {
+		background: #1e293b; 
+		border-radius: 4px;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background: #334155; 
+	}
+	
+	.is-revealed {
+		opacity: 1 !important;
+		transform: translateY(0) scale(1) !important;
+		filter: blur(0) !important;
+	}
+</style>

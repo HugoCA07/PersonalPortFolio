@@ -1,0 +1,65 @@
+---
+---
+<div id="telemetry-hud" class="fixed bottom-6 right-6 z-[100] flex flex-col items-end pointer-events-none opacity-0 transition-all duration-1000 translate-y-8">
+	
+	<!-- Top data row -->
+	<div class="flex gap-4 mb-3 text-[10px] font-mono font-bold tracking-widest uppercase text-slate-500 text-right mr-2">
+		<div class="flex flex-col items-end">
+			<span>Engine</span>
+			<span class="text-[var(--accent-red)]">ASTRO V4</span>
+		</div>
+		<div class="flex flex-col items-end border-l border-white/10 pl-4">
+			<span>Chassis</span>
+			<span class="text-slate-300">TAILWIND</span>
+		</div>
+	</div>
+
+	<!-- Main Dashboard -->
+	<div class="bg-[var(--bg-secondary)] border struct-border rounded-none p-4 flex items-center gap-6">
+		
+		<!-- G-Force Meter -->
+		<div class="flex flex-col items-center justify-center w-14 h-14 border struct-border bg-[#000] relative">
+			<span class="text-[8px] text-slate-500 absolute top-2 font-bold tracking-widest">G-FRC</span>
+			<span id="hud-gforce" class="text-sm font-bold text-slate-100 font-mono mt-3">0.0</span>
+		</div>
+
+		<!-- RPM / Scroll Velocity Bar -->
+		<div class="flex flex-col items-end w-40">
+			<div class="flex justify-between w-full mb-1.5">
+				<span class="text-[9px] font-bold text-slate-500 tracking-widest">SCROLL RPM</span>
+				<span id="hud-rpm-text" class="text-[10px] font-mono text-slate-300 font-bold transition-colors">0</span>
+			</div>
+			
+			<!-- Progress Bar Container -->
+			<div class="w-full h-2 bg-[#000] border struct-border overflow-hidden flex">
+				<!-- Dynamic Bar -->
+				<div id="hud-rpm-bar" class="h-full w-0 bg-[var(--accent-red)] transition-all duration-75 ease-linear"></div>
+			</div>
+			
+			<!-- Scale markers -->
+			<div class="flex justify-between w-full mt-1.5 px-1">
+				<div class="w-[1px] h-1.5 bg-slate-700"></div>
+				<div class="w-[1px] h-1 bg-slate-700"></div>
+				<div class="w-[1px] h-1.5 bg-slate-700"></div>
+				<div class="w-[1px] h-1 bg-slate-700"></div>
+				<div class="w-[2px] h-2 bg-red-500 shadow-[0_0_5px_rgba(239,68,68,1)]"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	/* Global motion blur class applied to body when scrolling fast */
+	:global(body.high-speed) #home,
+	:global(body.high-speed) #projects,
+	:global(body.high-speed) #experience {
+		filter: blur(4px) brightness(1.1);
+		transform: scale(0.995);
+	}
+	
+	:global(body) #home,
+	:global(body) #projects,
+	:global(body) #experience {
+		transition: filter 0.15s ease-out, transform 0.15s ease-out;
+	}
+</style>

@@ -1,0 +1,53 @@
+---
+import WindTunnel from './WindTunnel.astro';
+---
+<section id="home" class="min-h-screen flex items-center justify-center relative z-10 overflow-hidden pt-32 pb-20">
+	
+	<!-- Atmospheric Background -->
+	<div class="absolute inset-0 z-0 opacity-40 mix-blend-screen pointer-events-none">
+		<WindTunnel />
+		<!-- Vignette -->
+		<div class="absolute inset-0 shadow-[inset_0_0_150px_rgba(8,12,16,1)] z-10"></div>
+	</div>
+
+	<div class="max-w-[100rem] mx-auto px-4 lg:px-12 w-full relative z-10 flex flex-col items-center justify-center">
+		
+		<!-- Editorial Floating ID Card -->
+		<div class="absolute top-0 right-10 md:right-24 lg:right-32 w-48 md:w-64 aspect-[3/4] z-30 transform rotate-12 hover:rotate-0 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-[0_30px_60px_rgba(0,0,0,0.8)] border struct-border bg-[var(--bg-secondary)] overflow-hidden reveal-on-scroll opacity-0 translate-y-24" style="transition-delay: 200ms">
+			<div class="absolute top-4 left-1/2 -translate-x-1/2 w-12 h-2 border struct-border rounded-full bg-black z-40"></div>
+			<div class="w-full h-3/5 bg-[#111] relative">
+				<img 
+					src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop" 
+					alt="Hugo Cruz Aranda" 
+					class="w-full h-full object-cover grayscale mix-blend-luminosity hover:grayscale-0 hover:mix-blend-normal transition-all duration-700"
+				/>
+			</div>
+			<div class="p-4 flex flex-col h-2/5 justify-between">
+				<div>
+					<h3 class="text-white font-bold text-lg leading-none font-clash uppercase">Hugo C.</h3>
+					<p class="text-[var(--accent-red)] text-[10px] tracking-widest uppercase font-mono mt-1">ID: 00-4X9</p>
+				</div>
+				<div class="flex justify-between items-end">
+					<span class="text-[9px] text-slate-500 font-mono tracking-widest uppercase">Lvl. 4</span>
+					<div class="w-2 h-2 rounded-full bg-[var(--accent-red)] animate-pulse"></div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Huge Editorial Title -->
+		<div class="relative w-full z-20 pointer-events-none select-none flex flex-col items-center text-center mt-20">
+			<h1 class="font-clash text-[18vw] lg:text-[15vw] leading-[0.75] font-black text-white uppercase tracking-tighter mix-blend-difference is-revealed">
+				<span class="block clip-text-reveal"><span>ENGINEERED</span></span>
+				<span class="block clip-text-reveal" style="transition-delay: 100ms"><span>FOR <span class="text-[var(--accent-red)] italic">SPEED.</span></span></span>
+			</h1>
+		</div>
+		
+		<!-- Text Content -->
+		<div class="mt-16 z-30 reveal-on-scroll opacity-0 translate-y-12 transition-all duration-[1000ms] ease-[cubic-bezier(0.22,1,0.36,1)]" style="transition-delay: 400ms">
+			<p class="text-lg md:text-2xl text-slate-400 font-light leading-snug font-clash max-w-xl text-center">
+				Crafting <span class="font-medium text-white italic">high-performance</span> digital architectures with absolute precision and raw aesthetics.
+			</p>
+		</div>
+		
+	</div>
+</section>
